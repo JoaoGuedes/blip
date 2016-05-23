@@ -1,6 +1,5 @@
 import { API } from './API';
 import * as chai from 'chai';
-import * as Model from '../public/models/games.json';
 import * as sinon from 'sinon';
 import * as jsdom from 'jsdom-global';
 
@@ -9,13 +8,8 @@ describe('API', function() {
     let api, stub, expect = chai.expect;
 
     before(() => {
-        jsdom.default()
+        jsdom.default();
         api = new API();
-        api.storage.games = Model.games.slice(0,3);
-    });
-
-    after(() => {
-        api.storage.games = undefined;
     });
 
     it('should fetch file', done => {
@@ -24,61 +18,49 @@ describe('API', function() {
                 expect(result.id).to.equal(1);
                 done();
             })
-            .catch(err => {
-                done(err)
-            });
+            .catch(err => done(err));
     });
 
-    it('should return model', done => {
-        stub = sinon.stub(api, 'fetch', function(url) {
-            return new Promise(resolve => resolve(Model));
-        })
+    it('should fail when no arguments are passed', done => {
+        api.getLocation()
+            .catch(err => { done(); });
+    });
 
-        api.getAll()
+    it('should return correct location', done => {
+        api.getLocation('porto')
             .then(result => {
-                expect(result.length).to.equal(118);
-                stub.restore();
+                expect(result.location.city).to.equal('Porto');
                 done();
             })
-            .catch(err => {
-                stub.restore();
-                done(err);
-            });
+            .catch(err => { done(err); });
+    });
 
-    })
-
-    it('should append extra properties to model', done => {
-        let stub = sinon.stub(api, 'fetch', function(url) {
-            return new Promise(resolve => resolve(Model));
-        })
-
-        api.getAll()
+    it('should return correct location from cache', done => {
+        api.getLocation('lisboa')
+            .then(() => api.getLocation('LisBoA'))
             .then(result => {
-                expect(result[0]).to.have.property('images');
-                expect(result[0]).to.have.property('id');
-                expect(result[0]).to.have.property('name');
-                stub.restore();
+                expect(result.cached).to.be.true;
                 done();
             })
-            .catch(err => {
-                stub.restore();
-                done(err);
-            });
-    })
+            .catch(err => { done(err); });
+    });
 
-    it('should return correct game', done => {
-
-        api.getByIndex(0)
+    it('shouldn\'t return location from cache', done => {
+        api.getLocation('braga')
             .then(result => {
-                expect(result.id).to.equal(0);
-                expect(result.name).to.equal("8-Ball Pool");
+                expect(result.cached).to.be.undefined;
                 done();
             })
-            .catch(err => {
-                done(err)
-            });
+            .catch(err => { done(err); });
+    });
 
-    })
+    it('shouldn\'t return a valid location', done => {
+        api.getLocation('foo444')
+            .then(result => {
+                expect(result).to.be.null;
+                done();
+            })
+            .catch(err => { done(err); });
+    });
 
-
-})
+});

@@ -1,7 +1,5 @@
 'use strict';
 
-import { Storage } from './Storage';
-
 let instance;
 
 /**
@@ -12,10 +10,9 @@ export class API {
 
     constructor() {
         if (!instance) {
-            this.storage = new Storage();
-            this.query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\'%s\')';
-            this.url = 'https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q=';
-            this.locations = {};
+            this.query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="%s")';
+            this.url = 'https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q';
+            this.cache = {};
             instance = this;
         }
         return instance;
@@ -53,30 +50,30 @@ export class API {
      */
     getLocation(location) {
 
-        /*if (this.model) {
-            return new Promise(resolve => resolve(this.model));
-        }*/
+        if (!location) {
+            return new Promise((resolve, reject) => reject());
+        }
 
+        location = location.toLowerCase();
 
         let query = this.query.replace('%s', location),
-            url = `${this.url}${query}`;
+            url = `${this.url}=${query}`;
 
-        return this.fetch(url)
-                    .then(data => console.log(data));
+        if (this.cache[location]) {
+            return Object.assign(this.cache[location], { cached: true });
+        } else {
+            return this.fetch(url)
+                        .then(data => {
+                            if (data.query.count === 0) {
+                                return null;
+                            }
+
+                            let payload = data.query.results.channel;
+                            this.cache[location] = payload;
+                            return payload;
+                        });
+        }
 
     }
 
-    /**
-     * Get game by index
-     * @returns Promise with data
-     */
-    getByIndex(index) {
-
-        if (this.model) {
-            return new Promise(resolve => resolve(this.model[index]))
-        }
-        else {
-            return this.getAll().then(() => this.model[index]);
-        }
-    }
 }
