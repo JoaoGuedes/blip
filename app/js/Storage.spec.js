@@ -4,7 +4,7 @@ import * as Model from '../public/models/games.json';
 import * as sinon from 'sinon';
 import * as jsdom from 'jsdom-global';
 
-describe('Storage', function() {
+xdescribe('Storage', function() {
 
     let storage, stub, expect = chai.expect;
 

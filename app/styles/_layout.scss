@@ -2,21 +2,17 @@
     margin-top: 20px;
 }
 
-.banner-size {
-    max-width: 764px;
-}
-
 nav {
     @extend .u-full-width;
     padding: 15px 15px 0px 15px;
     position: fixed;
-    border-bottom: 2px solid $orange;
-    min-height: 60px;
+    border-bottom: 2px solid $belize;
+    min-height: 40px;
     z-index: 100;
     background-color: white;
 
     .nav {
-        margin-bottom: 1em;
+        margin-bottom: 0em;
     }
 
     form {
@@ -27,18 +23,11 @@ nav {
         width: 100%;
     }
 
-    .hideable {
-        display: none;
-
-        @media screen and (min-width: $desktop-bp) {
-            display: initial;
-        }
-    }
 }
 
 .phantom {
     position: relative;
-    height: 150px;
+    height: 100px;
 
     @media screen and (min-width: $desktop-bp) {
         height: 90px;
@@ -64,4 +53,11 @@ a {
         font-size: 2.0rem;
     }
 
+}
+
+
+.column, .columns {
+    @media (min-width: 550px) {
+        margin-left: 1%;
+    }
 }

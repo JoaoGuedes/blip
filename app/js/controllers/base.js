@@ -1,7 +1,6 @@
 'use strict';
 
 import { API } from '../API';
-import { Storage } from '../Storage';
 
 export class BaseController {
 
@@ -13,17 +12,16 @@ export class BaseController {
      */
     constructor(controller) {
         this.API = new API();
-        this.storage = new Storage();
         this.controller = controller;
 
-        this.model.then((data) => this.addController(data));
+        //this.model.then((data) => this.addController(data));
+        this.bind({})
     }
 
     /**
      * Default model for subclasses, returns all games
      */
     get model() {
-        return this.API.getAll().catch(console.log);
     }
 
     /**

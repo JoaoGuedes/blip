@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>King Portfolio - List</title>
+    <title>Blip Weather</title>
     <meta name="description" content="King Portfolio">
     <meta name="author" content="João Guedes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,24 +27,14 @@
 
     <nav>
         <div class="row nav">
-            <div class="one column center hideable">
-                <a href="/"><h5>Home</h5></a>
-            </div>
-            <div class="ten columns">
+            <div class="twelve columns">
                 <form>
                     <div class="inline center">
-                        <label for="query">Search:</label>
+                        <label for="query">Location</label>
                         <input class="four columns capped" type="text"
-                        placeholder="Bubble Saga" id="query" data-rv-value="query">
-                        <label class="example-send-yourself-copy">
-                            <input type="checkbox" data-rv-checked="controller.portfolio.active">
-                            <span class="label-body">Only my collection</span>
-                        </label>
+                        placeholder="Porto, Portugal" id="query" data-rv-value="query">
                     </div>
                 </form>
-            </div>
-            <div class="one column center hideable">
-                <a href="http://www.king.com"><img src="assets/logo.png" alt="logo"></a>
             </div>
         </div>
     </nav>
@@ -53,21 +43,12 @@
 
     <div class="container content">
 
-        <div id="viewMode" class="row">
-            <button class="u-pull-right button-primary" style="margin-left: 5px" data-rv-on-click="controller.view.list">
-                <img src="assets/list.png" width="18" alt="list">
-            </button>
-            <button class="u-pull-right button-primary" data-rv-on-click="controller.view.grid">
-                <img src="assets/grid.png" width="18" alt="grid">
-            </button>
-        </div>
-
         <!-- Loading spinner -->
         <div data-rv-if="model | negate" class="center">
             <img src="assets/spinner.gif" alt="Loading">
         </div>
 
-        <ul data-rv-class-listify="controller.view.asList" data-rv-class-gridify="controller.view.asList | negate">
+        <ul>
             <li data-rv-each-game="model | filter 'name' query | filter_if 'added' controller.portfolio.active | lazy_load">
                 <div class="wrap" data-rv-class-added="game.added" data-rv-on-click="controller.portfolio.toggle">
                     <a data-rv-href="game.id | prepend '/view.html?id='" data-rv-on-click="controller.go">
