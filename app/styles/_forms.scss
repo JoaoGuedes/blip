@@ -8,9 +8,3 @@ form div.inline {
     }
 
 }
-
-.capped {
-    @media screen and (min-width: $desktop-bp) {
-        max-width: 300px;
-    }
-}

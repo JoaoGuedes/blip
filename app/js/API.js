@@ -10,7 +10,7 @@ export class API {
 
     constructor() {
         if (!instance) {
-            this.query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="%s")';
+            this.query = 'select * from weather.forecast where u="c" and woeid in (select woeid from geo.places(1) where text="%s")';
             this.url = 'https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q';
             this.cache = {};
             instance = this;
@@ -60,7 +60,7 @@ export class API {
             url = `${this.url}=${query}`;
 
         if (this.cache[location]) {
-            return Object.assign(this.cache[location], { cached: true });
+            return new Promise((resolve,reject) => resolve(Object.assign(this.cache[location], { cached: true })));
         } else {
             return this.fetch(url)
                         .then(data => {

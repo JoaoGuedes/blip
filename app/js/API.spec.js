@@ -5,7 +5,7 @@ import * as jsdom from 'jsdom-global';
 
 describe('API', function() {
 
-    let api, stub, expect = chai.expect;
+    let api, expect = chai.expect;
 
     before(() => {
         jsdom.default();

@@ -16,10 +16,10 @@
     <script src="js/config.js"></script>
     <script src="js/bundle.js"></script>
     <script>
-        window.addEventListener('load', function() {
-            var ListController = require('List').Controller,
-                ctrler = new ListController();
-        });
+    window.addEventListener('load', function() {
+        var ListController = require('List').Controller,
+        ctrler = new ListController();
+    });
     </script>
 </head>
 
@@ -30,41 +30,43 @@
             <div class="twelve columns">
                 <form>
                     <div class="inline center">
-                        <label for="query">Location</label>
-                        <input class="four columns capped" type="text"
-                        placeholder="Porto, Portugal" id="query" data-rv-value="query">
+                        <label for="query">Location:</label>
+                        <input class="four columns" type="text" name="query"
+                        placeholder="Porto, Portugal" data-rv-value="query">
+                        <button value="search" data-rv-on-click="controller.search"
+                        data-rv-class-disabled="query | negate"
+                        data-rv-disabled="query | negate">Search</button>
                     </div>
                 </form>
             </div>
         </div>
     </nav>
-    <div class="phantom row">
-    </div>
+    <div class="phantom row"></div>
 
     <div class="container content">
 
         <!-- Loading spinner -->
-        <div data-rv-if="model | negate" class="center">
+        <div data-rv-if="searching" class="center">
             <img src="assets/spinner.gif" alt="Loading">
         </div>
 
-        <ul>
-            <li data-rv-each-game="model | filter 'name' query | filter_if 'added' controller.portfolio.active | lazy_load">
-                <div class="wrap" data-rv-class-added="game.added" data-rv-on-click="controller.portfolio.toggle">
-                    <a data-rv-href="game.id | prepend '/view.html?id='" data-rv-on-click="controller.go">
-                        <h5>{ game.name }</h5>
-                    </a>
-                    <div class="center">
-                        <a data-rv-href="game.id | prepend '/view.html?id='" data-rv-on-click="controller.go">
-                            <img src="#" alt="{ game.name }" data-rv-if="controller.view.asList | negate" data-rv-src="game.images.bigger">
-                            <img src="#" alt="{ game.name }" data-rv-if="controller.view.asList" data-rv-src="game.images.banner">
-                        </a>
-                    </div>
-                    <button class="flat add" data-rv-hide="game.added">Add to Collection</button>
-                    <button class="flat remove" data-rv-show="game.added">Remove</button>
-                </div>
-            </li>
-        </ul>
+        <label data-rv-if="error">{error}</label>
+
+        <div data-rv-hide="searching">
+            <div data-rv-hide="error">
+
+                <ul>
+                    <li data-rv-each-forecast="model.item.forecast">
+                        <div class="wrap">
+                            <h5>{forecast.day} - {forecast.date}</h5>
+                            <label>High: {forecast.high}</label>
+                            <label>Low: {forecast.low}</label>
+                        </div>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
     </div>
 
 </body>

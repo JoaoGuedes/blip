@@ -1,40 +1,51 @@
 'use strict';
 
-import { BaseController } from './Base';
-import { Router } from '../Router';
+import { API } from '../API';
 
-export class Controller extends BaseController {
+export class Controller {
 
     constructor() {
 
-        //Define controller to be assigned in superclass.
-        let controller = {
-            view: {
-                list    : () => { this.controller.view.asList = true; },    //change view mode to list
-                grid    : () => { this.controller.view.asList = false; },   //change view mode to grid
-                asList  : false, //current view mode (defaults to grid)
-            },
-            go: (event,scope) => {
-                event.stopPropagation();                                    //Avoid bubbling up of click event
-                Router.go(`view.html?id=${scope.game.id}`);                 //Go to view URL with id of game
-            },
-            portfolio: {
-                add     : (event,scope) => this.storage.add(scope.game),    //Add game to localStorage
-                remove  : (event,scope) => {
-                    this.storage.remove(scope.game);                        //Remove game fmor localStorage
-                    scope.model.splice(0,0);                                //force array refresh;
-                },
-                toggle  : (event,scope) => {                                //Toggle remove and add from localStorage
-                    if (scope.game.added) {
-                        this.controller.portfolio.remove(event, scope)
-                    } else {
-                        this.controller.portfolio.add(event, scope);
-                    }
-                },
-                active  : false                                             //Toggle show my collection or all games
+        this.API = new API();
+
+        this.controller = {
+            search: (event, scope) => {
+                event.preventDefault();
+                scope.error = undefined;
+                scope.searching = true;
+                this.getWeather(scope.query).then(() => { scope.searching = false; });
             }
         };
-        super(controller);
+
+        this.scope = {
+            controller: this.controller
+        };
+
+        this.bind(this.scope);
     }
+
+    getWeather(location) {
+        return this.API.getLocation(location)
+            .then(result => {
+                if (result) {
+                    this.scope.model = result;
+                } else {
+                    this.scope.error = 'Unable to find location!';
+                }
+            })
+            .catch(() => {
+                this.scope.error = 'Unable to find location!';
+            });
+    }
+
+    /**
+     * Binds scope to body
+     */
+    bind(scope) {
+        rivets.bind(document.body, scope);
+        document.body.className = "visible"; //to avoid flickering
+    }
+
+
 
 }
