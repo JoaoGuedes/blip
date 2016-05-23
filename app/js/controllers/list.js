@@ -29,6 +29,7 @@ export class Controller {
             .then(result => {
                 if (result) {
                     this.scope.model = result;
+                    this.scope.model.item.forecast.splice(5);
                 } else {
                     this.scope.error = 'Unable to find location!';
                 }
