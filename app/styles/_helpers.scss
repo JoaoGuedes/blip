@@ -1,0 +1,21 @@
+.center {
+    text-align: center;
+}
+
+.display-block {
+    display: block;
+    width: 100%
+}
+
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: inherit;
+}
+
+.dummy:after {
+    content: ".";
+    color: white;
+}

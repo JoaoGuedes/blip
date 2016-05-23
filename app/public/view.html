@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>King Portfolio - View</title>
+    <meta name="description" content="King Portfolio">
+    <meta name="author" content="João Guedes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    <script src="//localhost:35729/livereload.js"></script>
+    <script src="js/vendor/promise.min.js"></script>
+    <script src="js/vendor/rivets.bundled.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/bundle.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            var ViewController = require('View').Controller,
+                ctrler = new ViewController();
+        });
+    </script>
+</head>
+
+<body class="invisible">
+
+    <nav>
+        <div class="row nav">
+            <div class="one column center">
+                <a href="/"><h5>Home</h5></a>
+            </div>
+            <div class="ten columns dummy"></div>
+            <div class="one column center">
+                <a href="http://www.king.com"><img src="assets/logo.png" alt="logo"></a>
+            </div>
+        </div>
+    </nav>
+    <div class="phantom row">
+    </div>
+
+    <div class="container content banner-size" data-rv-if="model">
+
+        <div class="row center">
+            <div class="twelve columns">
+                <h1>{ model.name }</h1>
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="twelve columns">
+                <img alt="{ model.name }" style="max-width: 100%" data-rv-src="model.images.banner" src="#">
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="twelve columns">
+                <h4>Screenshot</h4>
+                <img alt="{ model.name }" style="max-width: 100%" data-rv-src="model.images.screenshot" src="#">
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="twelve columns">
+                <button class="flat add" data-rv-on-click="controller.portfolio.add" data-rv-hide="model.added">Add to Collection</button>
+                <button class="flat remove" data-rv-on-click="controller.portfolio.remove" data-rv-show="model.added">Remove</button>
+            </div>
+        </div>
+
+        <div class="row center">
+            <div class="twelve columns">
+                <a class="button button-primary" data-rv-href="model.url" target="_blank">Play Game</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

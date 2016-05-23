@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>King Portfolio - List</title>
+    <meta name="description" content="King Portfolio">
+    <meta name="author" content="João Guedes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    <script src="//localhost:35729/livereload.js"></script>
+    <script src="js/vendor/promise.min.js"></script>
+    <script src="js/vendor/rivets.bundled.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/bundle.js"></script>
+    <script>
+        window.addEventListener('load', function() {
+            var ListController = require('List').Controller,
+                ctrler = new ListController();
+        });
+    </script>
+</head>
+
+<body class="invisible">
+
+    <nav>
+        <div class="row nav">
+            <div class="one column center hideable">
+                <a href="/"><h5>Home</h5></a>
+            </div>
+            <div class="ten columns">
+                <form>
+                    <div class="inline center">
+                        <label for="query">Search:</label>
+                        <input class="four columns capped" type="text"
+                        placeholder="Bubble Saga" id="query" data-rv-value="query">
+                        <label class="example-send-yourself-copy">
+                            <input type="checkbox" data-rv-checked="controller.portfolio.active">
+                            <span class="label-body">Only my collection</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="one column center hideable">
+                <a href="http://www.king.com"><img src="assets/logo.png" alt="logo"></a>
+            </div>
+        </div>
+    </nav>
+    <div class="phantom row">
+    </div>
+
+    <div class="container content">
+
+        <div id="viewMode" class="row">
+            <button class="u-pull-right button-primary" style="margin-left: 5px" data-rv-on-click="controller.view.list">
+                <img src="assets/list.png" width="18" alt="list">
+            </button>
+            <button class="u-pull-right button-primary" data-rv-on-click="controller.view.grid">
+                <img src="assets/grid.png" width="18" alt="grid">
+            </button>
+        </div>
+
+        <!-- Loading spinner -->
+        <div data-rv-if="model | negate" class="center">
+            <img src="assets/spinner.gif" alt="Loading">
+        </div>
+
+        <ul data-rv-class-listify="controller.view.asList" data-rv-class-gridify="controller.view.asList | negate">
+            <li data-rv-each-game="model | filter 'name' query | filter_if 'added' controller.portfolio.active | lazy_load">
+                <div class="wrap" data-rv-class-added="game.added" data-rv-on-click="controller.portfolio.toggle">
+                    <a data-rv-href="game.id | prepend '/view.html?id='" data-rv-on-click="controller.go">
+                        <h5>{ game.name }</h5>
+                    </a>
+                    <div class="center">
+                        <a data-rv-href="game.id | prepend '/view.html?id='" data-rv-on-click="controller.go">
+                            <img src="#" alt="{ game.name }" data-rv-if="controller.view.asList | negate" data-rv-src="game.images.bigger">
+                            <img src="#" alt="{ game.name }" data-rv-if="controller.view.asList" data-rv-src="game.images.banner">
+                        </a>
+                    </div>
+                    <button class="flat add" data-rv-hide="game.added">Add to Collection</button>
+                    <button class="flat remove" data-rv-show="game.added">Remove</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>

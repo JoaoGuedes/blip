@@ -1,0 +1,17 @@
+form div.inline {
+    label {
+        display: inline-block;
+    }
+
+    input {
+        float: none;
+        margin-left: 10px;
+    }
+
+}
+
+.capped {
+    @media screen and (min-width: $desktop-bp) {
+        max-width: 300px;
+    }
+}

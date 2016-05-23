@@ -1,0 +1,8 @@
+{
+    "presets": ["es2015"],
+    "plugins": [
+        ["transform-es2015-classes", { "loose": true }],
+        "transform-es2015-block-scoping",
+        "transform-proto-to-assign"
+    ]
+}

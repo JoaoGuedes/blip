@@ -1,0 +1,19 @@
+{
+  "name": "king-portfolio",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "rivets": "^0.8.1",
+    "skeleton-sass": "^2.5.2",
+    "promise-polyfill": "~5.1.0"
+  }
+}
