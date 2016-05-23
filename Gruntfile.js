@@ -79,17 +79,30 @@ module.exports = function(grunt) {
                     browserifyOptions: {
                         debug: true
                     },
-                    transform: ["babelify"],
+                    transform: ['babelify'],
                     plugin: [
-                        ['minifyify', [{ 'map': 'bundle.map.js' }]]
+                        ['minifyify']
                     ],
                     require: [
                         './app/js/controllers/list.js:List',
-                        './app/js/controllers/view.js:View'
                     ]
                 },
                 files: {
-                    "dist/js/bundle.js": ["app/js/*.js", "!app/js/**/*.spec.js"]
+                    'dist/js/bundle.js': ['app/js/*.js', '!app/js/**/*.spec.js']
+                }
+            },
+            dev: {
+                options: {
+                    browserifyOptions: {
+                        debug: true
+                    },
+                    transform: ['babelify'],
+                    require: [
+                        './app/js/controllers/list.js:List',
+                    ]
+                },
+                files: {
+                    'dist/js/bundle.js': ['app/js/*.js', '!app/js/**/*.spec.js']
                 }
             }
         },
@@ -113,7 +126,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('test', ['mochaTest']);
     grunt.registerTask('serve', ['connect', 'watch']);
-    grunt.registerTask('dev', ['build', 'connect', 'watch']);
-    grunt.registerTask('build', ['clean', 'copy', 'browserify', 'sass'])
+    grunt.registerTask('dev', ['clean', 'copy', 'browserify:dev', 'sass', 'connect', 'watch']);
+    grunt.registerTask('build', ['clean', 'copy', 'browserify:dist', 'sass']);
 
 };
