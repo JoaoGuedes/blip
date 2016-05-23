@@ -10,6 +10,19 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-mocha-test');
 
+    var browserifyOptions = {
+        browserifyOptions: {
+            debug: true
+        },
+        transform: ['babelify'],
+        require: [
+            './app/js/controllers/list.js:List',
+        ]
+    },
+        browserifyFiles = {
+            'dist/js/bundle.js': ['app/js/*.js', '!app/js/**/*.spec.js']
+        };
+
     grunt.initConfig({
         watch   : {
             options : {
@@ -75,35 +88,12 @@ module.exports = function(grunt) {
         },
         browserify: {
             dist: {
-                options: {
-                    browserifyOptions: {
-                        debug: true
-                    },
-                    transform: ['babelify'],
-                    plugin: [
-                        ['minifyify']
-                    ],
-                    require: [
-                        './app/js/controllers/list.js:List',
-                    ]
-                },
-                files: {
-                    'dist/js/bundle.js': ['app/js/*.js', '!app/js/**/*.spec.js']
-                }
+                options: Object.assign(Object.create(browserifyOptions), { plugin: ['minifyify'] }),
+                files: browserifyFiles
             },
             dev: {
-                options: {
-                    browserifyOptions: {
-                        debug: true
-                    },
-                    transform: ['babelify'],
-                    require: [
-                        './app/js/controllers/list.js:List',
-                    ]
-                },
-                files: {
-                    'dist/js/bundle.js': ['app/js/*.js', '!app/js/**/*.spec.js']
-                }
+                options: browserifyOptions,
+                files: browserifyFiles
             }
         },
         clean        : {
