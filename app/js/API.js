@@ -10,7 +10,7 @@ export class API {
 
     constructor(storage) {
         if (!instance) {
-            this.query = 'select * from weather.forecast where u="c" and woeid in (select woeid from geo.places(1) where text="%s")';
+            this.query = 'select * from weather.forecast where u="%f" and woeid in (select woeid from geo.places(1) where text="%s")';
             this.url = 'https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q';
             this.storage = storage;
             instance = this;
@@ -66,13 +66,16 @@ export class API {
      * Get location
      * @returns Promise with data
      */
-    getLocation(location) {
+    getLocation(location, inCelsius) {
 
         if (!location) {
             return new Promise((resolve, reject) => reject());
         }
 
-        let query = this.query.replace('%s', location.toLowerCase()),
+        let degrees = inCelsius ? 'c' : 'f',
+            query = this.query
+                    .replace('%f', degrees)
+                    .replace('%s', location.toLowerCase()),
             url = `${this.url}=${query}`;
 
         return this.get(url)

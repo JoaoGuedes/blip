@@ -18,12 +18,15 @@
         margin-top: 1em;
     }
 
+    .degrees {
+        display: inline-flex;
+    }
+    
     .high, .low {
         font-size: 20pt;
         span {
             font-size: 8pt;
         }
-        display: inline-flex;
     }
     .high {
         color: $pomegranate;

@@ -21,7 +21,7 @@
         ctrler = new ListController();
         //TODO: remove in the end
         ctrler.scope.query = 'Porto';
-        document.querySelector('button').click();
+        //document.querySelector('button').click();
     });
 
 
@@ -33,16 +33,21 @@
     <nav>
         <div class="row nav">
             <div class="twelve columns">
-                <form>
+                <div class="form">
                     <div class="inline center">
                         <label>Location:</label>
                         <input class="four columns" type="text"
+                        data-rv-on-keyup="controller.debounce"
                         placeholder="Porto, Portugal" data-rv-value="query">
-                        <button value="search" data-rv-on-click="controller.search"
+                        <!-- <button value="search" data-rv-on-click="controller.search"
                         data-rv-class-disabled="query | negate"
-                        data-rv-disabled="query | negate">Search</button>
+                        data-rv-disabled="query | negate">Search</button> -->
+                        <label class="degrees">
+                            <input type="checkbox" data-rv-checked="mode.celsius" data-rv-on-click="controller.toggle">
+                            <span class="label-body">Show in Celsius</span>
+                        </label>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </nav>
@@ -62,6 +67,9 @@
         <div data-rv-hide="searching">
             <div data-rv-hide="error">
 
+                <div class="twelve columns center">
+                    <h2>{model.location.city} <small>{model.location.country}</small></h2>
+                </div>
                 <ul class="gridify">
                     <li data-rv-each-forecast="model.item.forecast">
                         <div class="wrap">
@@ -71,9 +79,13 @@
                             </h5>
                             <i data-rv-class="'wi wi-yahoo-' | append forecast.code"></i>
                             <p>{forecast.text}</p>
-                            <div style="display: inline-block">
-                                <h6 class="high"><span>High</span>{forecast.high}</h6>
-                                <h6 class="low"><span>Low</span>{forecast.low}</h6>
+                            <div class="degrees">
+                                <h6 class="low">
+                                    <span>Low</span> {forecast.low}<sup><small>º</small></sup>
+                                </h6>
+                                <h6 class="high">
+                                    <span>High</span> {forecast.high}<sup><small>º</small></sup>
+                                </h6>
                             </div>
                         </div>
                     </li>

@@ -11,22 +11,44 @@ export class Controller {
 
         this.controller = {
             search: (event, scope) => {
-                event.preventDefault();
                 scope.error = false;
                 scope.searching = true;
-                this.getWeather(scope.query).then(() => { scope.searching = false; });
-            }
+                this.getWeather(scope.query, scope.mode.celsius).then(() => { scope.searching = false; });
+            },
+            toggle: (event, scope) => {
+                scope.mode.celsius = event.srcElement.checked;
+                this.controller.search(event, scope);
+            },
+            debounce: (function() {
+                let closure, DEBOUNCE = 3000;
+
+                return function(event, scope) {
+
+                    window.setTimeout(() => {
+                        console.log(scope.query, closure);
+                        if (scope.query === closure) {
+                            return;
+                        }
+                        closure = scope.query;
+                        this.controller.search(event, scope);
+                    }, DEBOUNCE);
+
+                }.bind(this);
+            }.bind(this))(),
         };
 
         this.scope = {
-            controller: this.controller
+            controller: this.controller,
+            mode: {
+                celsius: true
+            }
         };
 
         this.bind(this.scope);
     }
 
-    getWeather(location) {
-        return this.API.getLocation(location)
+    getWeather(location, inCelsius) {
+        return this.API.getLocation(location, inCelsius)
             .then(result => {
                 if (result) {
                     this.scope.model = result;
