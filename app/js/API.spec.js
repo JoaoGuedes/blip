@@ -1,15 +1,23 @@
 import { API } from './API';
+import { Storage } from './Storage';
 import * as chai from 'chai';
 import * as sinon from 'sinon';
 import * as jsdom from 'jsdom-global';
 
 describe('API', function() {
 
-    let api, expect = chai.expect;
+    let api, storage, expect = chai.expect;
 
     before(() => {
         jsdom.default();
-        api = new API();
+        window.localStorage = {
+            setItem: (key, value) => {
+                window.localStorage[key] = value;
+            },
+            getItem: (key) => window.localStorage[key]
+        };
+        storage = new Storage();
+        api = new API(storage);
     });
 
     it('should fetch file', done => {
@@ -37,7 +45,10 @@ describe('API', function() {
 
     it('should return correct location from cache', done => {
         api.getLocation('lisboa')
-            .then(() => api.getLocation('LisBoA'))
+            .then(result => {
+                expect(result.cached).to.be.undefined;
+                return api.getLocation('LisBoA');
+            })
             .then(result => {
                 expect(result.cached).to.be.true;
                 done();

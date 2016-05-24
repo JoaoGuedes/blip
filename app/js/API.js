@@ -6,33 +6,23 @@ let instance;
  * Returns data from JSON
  * Singleton class
  */
-
 export class API {
 
-    constructor() {
+    constructor(storage) {
         if (!instance) {
-            this.init();
+            this.query = 'select * from weather.forecast where u="c" and woeid in (select woeid from geo.places(1) where text="%s")';
+            this.url = 'https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q';
+            this.storage = storage;
             instance = this;
         }
         return instance;
     }
-
-    init() {
-        this.query = 'select * from weather.forecast where u="c" and woeid in (select woeid from geo.places(1) where text="%s")';
-        this.url = 'https://query.yahooapis.com/v1/public/yql?format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q';
-        this.cache = {};
-    };
 
     /**
      * Requests URL
      * @returns Promise resolved with value or error if it returns > 400 or is unable to parse JSON.
      */
     fetch(url) {
-
-        if (this.cache[url]) {
-            return new Promise((resolve,reject) => resolve(this.cache[url]));
-        }
-
         let xhttp = new XMLHttpRequest();
         xhttp.open("GET", url, true);
         xhttp.send();
@@ -42,7 +32,6 @@ export class API {
                 if (xhttp.readyState === 4 && xhttp.status === 200) {
                     try {
                         let parsedData = JSON.parse(xhttp.responseText);
-                        this.cache[url] = Object.assign(Object.create(parsedData), { cached: true });
                         resolve(parsedData);
                     }
                     catch(exception) {
@@ -53,6 +42,24 @@ export class API {
                 }
             };
         });
+    };
+
+    /**
+     * Gets URL if cached, or fetches it otherwise.
+     */
+    get(url) {
+
+        let cached = this.storage.retrieve(url);
+
+        if (cached) {
+            return new Promise((resolve,reject) => resolve(cached));
+        } else {
+            return this.fetch(url)
+                        .then(result => {
+                            this.storage.add(url, result);
+                            return result;
+                        });
+        }
     };
 
     /**
@@ -68,7 +75,7 @@ export class API {
         let query = this.query.replace('%s', location.toLowerCase()),
             url = `${this.url}=${query}`;
 
-        return this.fetch(url)
+        return this.get(url)
                     .then(data => {
                         if (data.query.count === 0) {
                             return null;

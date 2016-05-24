@@ -63,9 +63,13 @@
                 <ul class="gridify">
                     <li data-rv-each-forecast="model.item.forecast">
                         <div class="wrap">
-                            <h5 class="shortday">{forecast.day} <span class="weekday">{forecast.date}</span></h5>
-                            <label>{forecast.text}</label>
-                            <div class="" style="display: inline-block">
+                            <h5 class="shortday">
+                                <strong>{forecast.day}</strong>
+                                <span class="weekday">{forecast.date}</span>
+                            </h5>
+                            <i data-rv-class="'wi wi-yahoo-' | append forecast.code"></i>
+                            <p>{forecast.text}</p>
+                            <div style="display: inline-block">
                                 <h6 class="high"><span>High</span>{forecast.high}</h6>
                                 <h6 class="low"><span>Low</span>{forecast.low}</h6>
                             </div>

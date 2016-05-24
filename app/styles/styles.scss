@@ -1,4 +1,9 @@
 @import "skeleton_template";
+
+
+@import "weather-icons.min";
+$wi-path: 'font/';
+
 @import "variables";
 @import "components";
 @import "list";

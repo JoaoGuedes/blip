@@ -1,12 +1,13 @@
 'use strict';
 
 import { API } from '../API';
+import { Storage } from '../Storage';
 
 export class Controller {
 
     constructor() {
 
-        this.API = new API();
+        this.API = new API(new Storage());
 
         this.controller = {
             search: (event, scope) => {
@@ -46,7 +47,5 @@ export class Controller {
         rivets.bind(document.body, scope);
         document.body.className = "visible"; //to avoid flickering
     }
-
-
 
 }

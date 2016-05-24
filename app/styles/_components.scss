@@ -1,13 +1,21 @@
 .weather-item {
 
     .shortday {
-        color: $nephritis;
         font-size: 20pt;
     }
 
     .weekday {
         font-size: 12pt;
-        color: initial;
+    }
+
+    i {
+        font-size: 28pt;
+        color: $wisteria;
+        margin-top: 0.3em;
+    }
+
+    p {
+        margin-top: 1em;
     }
 
     .high, .low {

@@ -12,8 +12,9 @@
     "tests"
   ],
   "dependencies": {
+    "promise-polyfill": "~5.1.0",
     "rivets": "^0.8.1",
     "skeleton-sass": "^2.5.2",
-    "promise-polyfill": "~5.1.0"
+    "weather-icons": "~2.0.10"
   }
 }

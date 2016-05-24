@@ -11,6 +11,10 @@ rivets.formatters.prepend = function(value, prepend) {              //Prepends v
     return prepend + value;
 };
 
+rivets.formatters.append = function(value, append) {              //Appends value with append string
+    return value + append;
+};
+
 rivets.formatters.negate = function(value) {
     return !value;
 };

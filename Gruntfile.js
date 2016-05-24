@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         sass         : {
             dist     : {
                 options: {
-                    loadPath: ['app/bower_components/skeleton-sass/'],
+                    loadPath: ['app/bower_components/skeleton-sass/', 'app/bower_components/weather-icons/sass'],
                     style: 'compressed'
                 },
                 files: {
