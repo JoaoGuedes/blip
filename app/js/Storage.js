@@ -46,6 +46,10 @@ export class Storage {
         return Date.now() <= validUntil;
     }
 
+    _isValid(value) {
+        return value.query.count === 0 ? true : this._isWithinTTL(value);
+    }
+
     /**
      * Get from localStorage
      */
@@ -58,7 +62,7 @@ export class Storage {
         let model = this._get('model'),
             value = model ? model[url] : null;
 
-        return value && this._isWithinTTL(value) ? value : false;
+        return value && this._isValid(value) ? value : false;
     }
 
 };

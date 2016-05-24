@@ -55,7 +55,9 @@
             <img src="assets/spinner.gif" alt="Loading">
         </div>
 
-        <label data-rv-if="error">{error}</label>
+        <div data-rv-if="error" class="center">
+            <h3>{error}</h3>
+        </div>
 
         <div data-rv-hide="searching">
             <div data-rv-hide="error">

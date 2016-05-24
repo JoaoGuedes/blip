@@ -32,11 +32,11 @@ export class Controller {
                     this.scope.model = result;
                     this.scope.model.item.forecast.splice(5);
                 } else {
-                    this.scope.error = 'Unable to find location!';
+                    this.scope.error = 'Unable to find location';
                 }
             })
             .catch(() => {
-                this.scope.error = 'Unable to find location!';
+                this.scope.error = 'Unable to find location';
             });
     }
 
