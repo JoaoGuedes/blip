@@ -5,7 +5,7 @@
     <meta charset="utf-8">
 
     <title>Blip Weather</title>
-    <meta name="description" content="King Portfolio">
+    <meta name="description" content="Blip Weather">
     <meta name="author" content="João Guedes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,12 @@
     window.addEventListener('load', function() {
         var ListController = require('List').Controller,
         ctrler = new ListController();
+        //TODO: remove in the end
+        ctrler.scope.query = 'Porto';
+        document.querySelector('button').click();
     });
+
+
     </script>
 </head>
 
@@ -30,8 +35,8 @@
             <div class="twelve columns">
                 <form>
                     <div class="inline center">
-                        <label for="query">Location:</label>
-                        <input class="four columns" type="text" name="query"
+                        <label>Location:</label>
+                        <input class="four columns" type="text"
                         placeholder="Porto, Portugal" data-rv-value="query">
                         <button value="search" data-rv-on-click="controller.search"
                         data-rv-class-disabled="query | negate"
@@ -55,13 +60,15 @@
         <div data-rv-hide="searching">
             <div data-rv-hide="error">
 
-                <ul>
+                <ul class="gridify">
                     <li data-rv-each-forecast="model.item.forecast">
                         <div class="wrap">
-                            <h5>{forecast.day} - {forecast.date}</h5>
-                            <label>High: {forecast.high}</label>
-                            <label>Low: {forecast.low}</label>
-                            <label>Text: {forecast.text}</label>
+                            <h5 class="shortday">{forecast.day} <span class="weekday">{forecast.date}</span></h5>
+                            <label>{forecast.text}</label>
+                            <div class="" style="display: inline-block">
+                                <h6 class="high"><span>High</span>{forecast.high}</h6>
+                                <h6 class="low"><span>Low</span>{forecast.low}</h6>
+                            </div>
                         </div>
                     </li>
                 </ul>

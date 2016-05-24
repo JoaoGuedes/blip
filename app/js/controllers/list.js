@@ -11,7 +11,7 @@ export class Controller {
         this.controller = {
             search: (event, scope) => {
                 event.preventDefault();
-                scope.error = undefined;
+                scope.error = false;
                 scope.searching = true;
                 this.getWeather(scope.query).then(() => { scope.searching = false; });
             }

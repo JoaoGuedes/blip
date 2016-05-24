@@ -11,6 +11,7 @@
     box-sizing: border-box;
     text-align: center;
     padding: 20px;
+    background-color: $clouds;
 }
 
 .listify {
@@ -19,6 +20,7 @@
 
     li {
         width: 100%;
+        display: block;
         float: left;
         padding: 4px 8px 4px 8px;
         margin-bottom: 0px;
@@ -31,19 +33,11 @@
 
         .wrap {
             @extend .box;
-        }
-
-        .added {
-            background-color: $clouds;
-            background: $clouds;
+            @extend .weather-item;
         }
 
         img {
             width: 100%;
-        }
-
-        &:hover {
-            cursor: pointer;
         }
 
     }

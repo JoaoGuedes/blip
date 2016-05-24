@@ -1,7 +1,6 @@
 ###Installing dependencies
 
     npm install
-    cd app/
     bower install (needed for building the project)
 
 ###Running a static file server (serves the dist/ folder)
@@ -24,9 +23,9 @@
 
 #####Notes about the project
 
-* HTML is fully W3C compliant
+* HTML is W3C compliant
+* JSLint used on JavaScript
 * Responsive layout
 * Minified CSS and JS
-* Lazy loading of games for faster loading times
 * Tested in Chrome 50, Firefox 42, Safari 9.1 and IE 10
 * Stylesheets in CSS3 (SASS based)
