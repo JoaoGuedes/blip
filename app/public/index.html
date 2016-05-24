@@ -19,9 +19,6 @@
     window.addEventListener('load', function() {
         var ListController = require('List').Controller,
         ctrler = new ListController();
-        //TODO: remove in the end
-        ctrler.scope.query = 'Porto';
-        //document.querySelector('button').click();
     });
 
 
@@ -33,21 +30,20 @@
     <nav>
         <div class="row nav">
             <div class="twelve columns">
-                <div class="form">
+                <form class="form">
                     <div class="inline center">
                         <label>Location:</label>
                         <input class="four columns" type="text"
-                        data-rv-on-keyup="controller.debounce"
                         placeholder="Porto, Portugal" data-rv-value="query">
-                        <!-- <button value="search" data-rv-on-click="controller.search"
+                        <button value="search" data-rv-on-click="controller.search"
                         data-rv-class-disabled="query | negate"
-                        data-rv-disabled="query | negate">Search</button> -->
+                        data-rv-disabled="query | negate">Search</button>
                         <label class="degrees">
                             <input type="checkbox" data-rv-checked="mode.celsius" data-rv-on-click="controller.toggle">
                             <span class="label-body">Show in Celsius</span>
                         </label>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </nav>
@@ -60,6 +56,7 @@
             <img src="assets/spinner.gif" alt="Loading">
         </div>
 
+        <!-- Error message -->
         <div data-rv-if="error" class="center">
             <h3>{error}</h3>
         </div>
@@ -68,12 +65,16 @@
             <div data-rv-hide="error">
 
                 <div class="twelve columns center">
-                    <h2>{model.location.city} <small>{model.location.country}</small></h2>
+                    <h2>
+                        <strong>{model.location.city}</strong>
+                        <small>{model.location.country}</small>
+                    </h2>
                 </div>
+
                 <ul class="gridify">
                     <li data-rv-each-forecast="model.item.forecast">
                         <div class="wrap">
-                            <h5 class="shortday">
+                            <h5>
                                 <strong>{forecast.day}</strong>
                                 <span class="weekday">{forecast.date}</span>
                             </h5>

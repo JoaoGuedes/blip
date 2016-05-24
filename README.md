@@ -27,5 +27,4 @@
 * JSLint used on JavaScript
 * Responsive layout
 * Minified CSS and JS
-* Tested in Chrome 50, Firefox 42, Safari 9.1 and IE 10
 * Stylesheets in CSS3 (SASS based)

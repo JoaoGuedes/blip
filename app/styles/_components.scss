@@ -1,6 +1,6 @@
 .weather-item {
 
-    .shortday {
+    h5 {
         font-size: 20pt;
     }
 
@@ -21,7 +21,7 @@
     .degrees {
         display: inline-flex;
     }
-    
+
     .high, .low {
         font-size: 20pt;
         span {

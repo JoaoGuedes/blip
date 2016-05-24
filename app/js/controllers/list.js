@@ -7,36 +7,48 @@ export class Controller {
 
     constructor() {
 
+        //Instantiate API
         this.API = new API(new Storage());
 
+        //Define controller to be used on view
         this.controller = {
-            search: (event, scope) => {
+
+            //Calls API on manipulates control variables (searching/error)
+            search: (event, scope, prevent) => {
+                if (!prevent) {
+                    event.preventDefault();
+                }
                 scope.error = false;
                 scope.searching = true;
                 this.getWeather(scope.query, scope.mode.celsius).then(() => { scope.searching = false; });
             },
+
+            //Checkbox toggles celsius mode and triggers new search
             toggle: (event, scope) => {
                 scope.mode.celsius = event.srcElement.checked;
-                this.controller.search(event, scope);
+                this.controller.search(event, scope, true);
             },
-            debounce: (function() {
-                let closure, DEBOUNCE = 3000;
 
-                return function(event, scope) {
+            //Debounces input events, so clicking the search button is not needed
+            debounce: (() => {                          //This wasn't working perfectly, so I chose not to use it
+                let closure, DEBOUNCE = 5000;
+
+                return (event, scope) => {
 
                     window.setTimeout(() => {
-                        console.log(scope.query, closure);
                         if (scope.query === closure) {
                             return;
                         }
                         closure = scope.query;
-                        this.controller.search(event, scope);
+                        this.controller.search(event, scope, true);
+
                     }, DEBOUNCE);
 
-                }.bind(this);
-            }.bind(this))(),
+                };
+            })(),
         };
 
+        //Define scope, which will be used on the view
         this.scope = {
             controller: this.controller,
             mode: {

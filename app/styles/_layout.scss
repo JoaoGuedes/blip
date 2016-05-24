@@ -38,22 +38,6 @@ nav {
     }
 }
 
-a {
-
-    text-decoration: none;
-    display: inline-block;
-
-    &:hover {
-        text-decoration: underline;
-    }
-
-    h5 {
-        font-size: 2.0rem;
-    }
-
-}
-
-
 .column, .columns {
     @media (min-width: 550px) {
         margin-left: 1%;
