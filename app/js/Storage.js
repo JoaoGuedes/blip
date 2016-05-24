@@ -13,7 +13,7 @@ export class Storage {
     /**
      * Get key in localStorage
      */
-    _get(key, dflt) {
+    _get(key) {
         let item = window.localStorage.getItem(key);
         return item ? JSON.parse(item) : null;
     }
@@ -46,6 +46,10 @@ export class Storage {
         return Date.now() <= validUntil;
     }
 
+    /**
+     * If query returns no results, assume query is valid.
+     * Otherwise check if it's within TTL.
+     */
     _isValid(value) {
         return value.query.count === 0 ? true : this._isWithinTTL(value);
     }
