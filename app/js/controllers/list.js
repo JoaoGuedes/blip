@@ -30,18 +30,20 @@ export class Controller {
             },
 
             //Debounces input events, so clicking the search button is not needed
-            debounce: (() => {                          //This wasn't working perfectly, so I chose not to use it
-                let closure, DEBOUNCE = 5000;
+            debounce: (() => {
+                let interval;
+                const DEBOUNCE = 2000;
 
                 return (event, scope) => {
 
-                    window.setTimeout(() => {
-                        if (scope.query === closure) {
-                            return;
-                        }
-                        closure = scope.query;
-                        this.controller.search(event, scope, true);
+                    if (interval) {
+                        return;
+                    }
 
+                    interval = window.setTimeout(() => {
+                        console.log('searching');
+                        this.controller.search(event, scope, true);
+                        interval = undefined;
                     }, DEBOUNCE);
 
                 };

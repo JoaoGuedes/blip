@@ -34,6 +34,7 @@
                     <div class="inline center">
                         <label>Location:</label>
                         <input class="four columns" type="text"
+                        data-rv-on-keydown="controller.debounce"
                         placeholder="Porto, Portugal" data-rv-value="query">
                         <button value="search" data-rv-on-click="controller.search"
                         data-rv-class-disabled="query | negate"
